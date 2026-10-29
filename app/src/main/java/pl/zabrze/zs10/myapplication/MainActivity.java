@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,7 +59,21 @@ public class MainActivity extends AppCompatActivity {
                         nauczycielList.add(nauczyciel);
                         arrayAdapter.notifyDataSetChanged();
                     }
+
                 }
         );
+
+        listView.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        szkolaDataBase.getNauczycielDao().usunNauczycielaZBazy(nauczycielList.get(i));
+                        nauczycielList.remove(i);
+                        arrayAdapter.notifyDataSetChanged();
+                        return false;
+                    }
+                }
+        );
+
     }
 }
